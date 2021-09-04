@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<robot name="euroc_mav" xmlns:xacro="http://ros.org/wiki/xacro">
+<link name="imu4"/>
+<link name="cam0"/>
+<!-- reverse test resulted in no change 
+<joint name="cam_to_imu" type="fixed">
+    <parent link="cam0"/>
+    <child link="imu4" />
+    <origin xyz="-0.0216401454975 -0.064676986768 0.00981073058949" rpy="-0.0257186 0.0041403 1.5559301"/>
+</joint>
+
+-->
+<joint name="cam_to_imu" type="fixed">
+    <parent link="imu4"/>
+    <child link="cam0" />
+    <origin xyz="-0.06438821  0.02234631 -0.01012223" rpy="0.01708676 -0.02327693 -1.55578111"/>
+</joint>
+</robot>

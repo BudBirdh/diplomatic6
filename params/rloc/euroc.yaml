@@ -1,0 +1,80 @@
+# For parameter descriptions, please refer to the template parameter files for each node.
+
+openvslam_odom:
+    ros__parameters:
+        publish_tf: true 
+        frequency: 50.0
+        sensor_timeout: 0.03
+        two_d_mode: false 
+        filter_type: "ukf"
+        transform_time_offset: 0.0
+        transform_timeout: 0.0
+        print_diagnostics: true
+        debug: false
+
+        map_frame: map
+        odom_frame: odom
+#openvslam uses the camera frame implicitly
+#all sensor odometry data seems to need to be in the same frame before being published
+#if I am correctly reading https://github.com/cra-ros-pkg/robot_localization/issues/203
+        base_link_frame: cam0 
+#        base_link_frame: base_link 
+        world_frame: odom 
+
+        odom0: /run_slam/camera_pose 
+        odom0_config: [true, true, true,
+        true, true, true,
+        false, false, false,
+        false, false, false,
+        false, false, false]
+        odom0_queue_size: 20
+        odom0_nodelay: true
+        odom0_differential: false 
+        odom0_relative: false
+
+        imu0: /imu0
+        imu0_config: [false, false, false,
+                        false, false, false,
+                        false, false, false,
+                        true, true,  true,
+                        false, false, false]
+        imu0_nodelay: true 
+        imu0_differential: false 
+        imu0_relative: false
+        imu0_queue_size: 50 
+        imu0_remove_gravitational_acceleration: true
+
+        use_control: false
+
+        process_noise_covariance: [1e0, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    1e0, 0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    1e0, 0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    1e0,  0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    1e0,  0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    1e0, 0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.5,   0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.5e0,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.5e0,  0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.3,  0.0,    0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.3,  0.0,    0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.3,  0.0,    0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.1,  0.0,    0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.1,  0.0,
+                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.1]
+
+        initial_estimate_covariance: [1e-1, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    1e-1, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    1e-1, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    1e0,  0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    1e0,  0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    1e0, 0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,  0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,  0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,  0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,     0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     1e-9,   0.0,     0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     1e-9,   0.0,    0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     1e-9,  0.0,    0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    1e-9,  0.0,
+        0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,   1e-9]
+
